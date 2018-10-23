@@ -1,4 +1,4 @@
-//created by nsrazdan
+// created by nsrazdan
 
 template <typename T>
 namespace Snazzy {
