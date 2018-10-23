@@ -7,11 +7,11 @@
 
 namespace Snazzy {
     template <typename T>
-    Class singly_linked_list<T> {
-        Struct Node {
+    class singly_linked_list {
+        struct Node {
             T item;
             std::unique_ptr<Node> next;
-        }
+        };
      public: 
         singly_linked_list();
         singly_linked_list(T first_item);
@@ -19,11 +19,13 @@ namespace Snazzy {
         std::unique_ptr<Node> head;
     };
 
+    template <typename T>
     singly_linked_list<T>::singly_linked_list() {}
 
+    template <typename T>
     singly_linked_list<T>::singly_linked_list(T first_item) {
         head = std::unique_ptr<T>(first_item);
     }
 }
 
-#ENDIF // SINGLY_LINKED_LIST_H__
+#endif // SINGLY_LINKED_LIST_H__
