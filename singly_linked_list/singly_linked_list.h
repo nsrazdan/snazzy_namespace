@@ -33,7 +33,7 @@ namespace Snazzy {
     template <typename T>
     void singly_linked_list<T>::print_list() {
         auto n = head.get();
-        while (n) {
+        while (n != nullptr) {
             std::cout << n->item << std::endl;
             n = (n->next).get();
         }
