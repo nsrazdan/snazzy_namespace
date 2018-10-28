@@ -16,7 +16,7 @@ namespace Snazzy {
         // get element at given pos
         T& get(const unsigned int& pos);
         // return size
-        unsigned int size();
+        unsigned int getSize();
         // return if list is empty
         bool isEmpty();
         // return if list is full
@@ -26,9 +26,10 @@ namespace Snazzy {
         // find element that matches given value
         unsigned int find(const T& search);
      private:
-        bool checkInvalid(unsigned int pos);
+        // return if position is valid
+        bool isValid(const unsigned int& pos);
         unsigned int size;
-        T[1000] arr;
+        T arr[1000];
     };
 
     // default constructor
@@ -44,7 +45,8 @@ namespace Snazzy {
         } else if (isFull()) {
             throw std::overflow_error("Array is full!");
         }
-        for (unsigned int i = size - 1; i >= pos; i--) {
+        unsigned int i = size - 1;
+        for (; i >= pos; i--) {
             arr[i + 1] = arr[i];
         }
         arr[i] = insert;
@@ -58,7 +60,7 @@ namespace Snazzy {
             throw std::underflow_error("Position is invalid!");
         }
         arr[pos] = arr[size - 1];
-        arr[size - 1] = NULL;
+        arr[size - 1] = 0;
         size--;
     }
     
@@ -73,7 +75,7 @@ namespace Snazzy {
     
     // return size
     template <typename T>
-    unsigned int static_array_vector<T>::size() {
+    unsigned int static_array_vector<T>::getSize() {
         return size;
     }
     
@@ -93,12 +95,14 @@ namespace Snazzy {
     template <typename T>
     void static_array_vector<T>::swap
         (const unsigned int& pos_1, const unsigned int& pos_2) {
-        // FIXME: print relevant error for both different position accesses
+        // FIXME: use right type of error
         if (!isValid(pos_1)) {
-            std::string err_string = "Position" + pos_1 + "is invalid.";
+            std::string err_string = "Position" + std::to_string(pos_1) 
+                + "is invalid.";
             throw std::underflow_error(err_string);
         } else if (!isValid(pos_2)) {
-            std::string err_string = "Position" + pos_2 + "is invalid.";
+            std::string err_string = "Position" + std::to_string(pos_2) 
+                + "is invalid.";
             throw std::underflow_error(err_string);
         }
         
@@ -114,14 +118,15 @@ namespace Snazzy {
             if (arr[i] == search) {
                 return i;
             }
-        }
+        } 
         
-        std::cerr << "No match found" << std::end;
+        // FIXME: use right type of error
+        throw std::underflow_error("No match found");
     }
     
     // return if the given pos is valid
     template <typename T>
-    void static_array_vector<T>::isValid(unsigned int pos) {
+    bool static_array_vector<T>::isValid(const unsigned int& pos) {
         return (size > pos);
     }
 }
@@ -129,5 +134,12 @@ namespace Snazzy {
 int main() {
     
     Snazzy::static_array_vector<int> test;
+    test.insert(10, 0);
+    test.insert(100, 0);
+    test.remove(0);
+    test.insert(45, 0);
+    std::cout << test.find(45) << std::endl;
+    test.swap(0, 1);
+    std::cout << test.find(45) << std::endl;
     return 0;
 }
